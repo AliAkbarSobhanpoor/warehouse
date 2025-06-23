@@ -1,0 +1,31 @@
+from django.db import models
+
+from base.models import Base
+
+class Product(Base):
+    name = models.CharField(verbose_name="عنوان محصول", max_length=100)
+    price_label = models.PositiveIntegerField(verbose_name="قیمت فروش روی محصول",)
+    sell_price = models.PositiveIntegerField(
+        verbose_name="قیمت فروش",
+        help_text="مقدار این فیلد به شما کمک خواهد کرد تا از فروش به قیمت کمتر از این مقدار جلوگیری بکنید",
+    )
+
+    class Meta:
+        verbose_name = "محصول"
+        verbose_name_plural = "محصولات"
+
+class WarehouseItem(Base):
+    """
+    based on the products . we have items in here.
+    """
+    product = models.OneToOneField(
+        "warehouse.Product",
+        verbose_name="محصول",
+        on_delete=models.PROTECT,
+        related_name="warehouse_item",
+    )
+    stock_level = models.BooleanField(verbose_name="محصول موجود در انبار", default=True)
+
+    class Meta:
+        verbose_name = "دارایی انبار"
+        verbose_name_plural = "دارایی های انبار"
