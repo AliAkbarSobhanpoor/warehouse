@@ -14,6 +14,9 @@ class Product(Base):
         verbose_name = "محصول"
         verbose_name_plural = "محصولات"
 
+    def __str__(self):
+        return "{} {} فروش".format(self.name, self.price_label)
+
 class WarehouseItem(Base):
     """
     based on the products . we have items in here.
@@ -23,9 +26,13 @@ class WarehouseItem(Base):
         verbose_name="محصول",
         on_delete=models.PROTECT,
         related_name="warehouse_item",
+        unique=True,
     )
-    stock_level = models.BooleanField(verbose_name="محصول موجود در انبار", default=True)
+    stock_level = models.PositiveIntegerField(verbose_name="تعداد محصول موجود در انبار", default=True)
 
     class Meta:
         verbose_name = "دارایی انبار"
         verbose_name_plural = "دارایی های انبار"
+
+    def __str__(self):
+        return "{} {} فروش".format(self.product.name, self.product.price_label)

@@ -22,7 +22,6 @@ class InvoiceItem(Base):
         output_field=models.PositiveIntegerField(),
         db_persist=False,
     )
-
     class Meta:
         verbose_name = "آیتم فاکتور"
         verbose_name_plural = "آیتم های فاکتور"
