@@ -12,7 +12,7 @@ class Invoice(Base):
         verbose_name_plural = "فاکتور ها"
 
 class InvoiceItem(Base):
-    invoice = models.ForeignKey(verbose_name="سبد خرید", to="transaction.Invoice", on_delete=models.PROTECT, related_name="invoice_item")
+    invoice = models.ForeignKey(verbose_name="فاکتور", to="transaction.Invoice", on_delete=models.PROTECT, related_name="invoice_item")
     product = models.ForeignKey(verbose_name="محصول", to="warehouse.Product", on_delete=models.PROTECT, related_name="product_invoice_item")
     price = models.PositiveIntegerField(verbose_name="قیمت هر شل", default=0)
     count = models.PositiveIntegerField(verbose_name="تعداد شل", default=0)

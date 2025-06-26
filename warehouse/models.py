@@ -5,6 +5,7 @@ from base.models import Base
 class Product(Base):
     name = models.CharField(verbose_name="عنوان محصول", max_length=100)
     price_label = models.PositiveIntegerField(verbose_name="قیمت فروش روی محصول",)
+    shell_item_count = models.PositiveIntegerField(verbose_name="تعداد آیتم های هر شل")
     sell_price = models.PositiveIntegerField(
         verbose_name="قیمت فروش",
         help_text="مقدار این فیلد به شما کمک خواهد کرد تا از فروش به قیمت کمتر از این مقدار جلوگیری بکنید",
