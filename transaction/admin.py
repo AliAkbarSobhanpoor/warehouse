@@ -5,7 +5,7 @@ from .models import Invoice, InvoiceItem
 class InvoiceItemInline(admin.TabularInline):
     model = InvoiceItem
     extra = 0
-    fields = ('product', 'formated_price', 'count', 'formated_total_price')
+    fields = ('product', 'price', 'count', 'total_price')
     readonly_fields = ('total_price',)
 
 @admin.register(Invoice)
