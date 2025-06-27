@@ -5,11 +5,13 @@ from base.models import Base
 from user.models import User
 from warehouse.models import Product
 
+
 class Invoice(Base):
     customer = models.ForeignKey(verbose_name="مشتری", to="user.User", on_delete=models.PROTECT)
     class Meta:
         verbose_name = "فاکتور"
         verbose_name_plural = "فاکتور ها"
+
 
 class InvoiceItem(Base):
     invoice = models.ForeignKey(verbose_name="فاکتور", to="transaction.Invoice", on_delete=models.PROTECT, related_name="invoice_item")
