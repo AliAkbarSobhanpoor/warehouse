@@ -42,7 +42,7 @@ class InvoiceItemAdmin(admin.ModelAdmin):
     """
     Admin configuration for the InvoiceItem model (though often managed via InvoiceInline).
     """
-    form = InVoiceItemAdminFromta
+    form = InVoiceItemAdminFrom
     list_display = ('id', 'invoice', 'product', 'price', 'count', 'total_price', 'created_at', 'updated_at')
     list_display_links = ('id', 'invoice', 'product',)
     readonly_fields = ('total_price',)
