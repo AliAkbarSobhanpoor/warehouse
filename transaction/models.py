@@ -8,6 +8,10 @@ from warehouse.models import Product
 
 class Invoice(Base):
     customer = models.ForeignKey(verbose_name="مشتری", to="user.User", on_delete=models.PROTECT)
+
+    def __str__(self):
+        return 'فاکتور شماره {} کاربر {}'.format(self.id, self.customer)
+
     class Meta:
         verbose_name = "فاکتور"
         verbose_name_plural = "فاکتور ها"
@@ -24,6 +28,10 @@ class InvoiceItem(Base):
         output_field=models.PositiveIntegerField(),
         db_persist=False,
     )
+
+    def __str__(self):
+        return "آیتم مربوط به {}".format(self.invoice)
+
     class Meta:
         verbose_name = "آیتم فاکتور"
         verbose_name_plural = "آیتم های فاکتور"
