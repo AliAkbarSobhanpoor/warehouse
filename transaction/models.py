@@ -35,3 +35,4 @@ class InvoiceItem(Base):
     class Meta:
         verbose_name = "آیتم فاکتور"
         verbose_name_plural = "آیتم های فاکتور"
+        unique_together = ('invoice', 'product')

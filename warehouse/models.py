@@ -30,7 +30,6 @@ class WarehouseItem(Base):
         unique=True,
     )
     stock_level = models.PositiveIntegerField(verbose_name="تعداد محصول موجود در انبار", default=True)
-
     class Meta:
         verbose_name = "دارایی انبار"
         verbose_name_plural = "دارایی های انبار"
