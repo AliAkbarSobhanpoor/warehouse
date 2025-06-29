@@ -1,6 +1,27 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 from django_jalali.db import models as jmodels
 from user.models import User
+
+# history models setter and getter -------------------------------------------------------------------------------------
+
+def history_user_getter(historical_instance):
+    if historical_instance.history_user_id is None:
+        return None
+
+    try:
+        return get_user_model().objects.get(id=historical_instance.history_user_id)
+    except get_user_model().DoesNotExist:
+        return None
+
+def history_suer_setter(historical_instance, user):
+    if user is not None:
+        historical_instance.history_user_id = user.id
+    else:
+        historical_instance.history_user_id = None
+
+
+# ----------------------------------------------------------------------------------------------------------------------
 
 
 class Base(models.Model):

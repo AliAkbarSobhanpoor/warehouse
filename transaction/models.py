@@ -1,13 +1,19 @@
 from django.db import models
 from django.db.models import F, Sum
+from simple_history.models import HistoricalRecords
 
-from base.models import Base
+from base.models import Base, history_suer_setter, history_user_getter
 from user.models import User
 from warehouse.models import Product
 
 
 class Invoice(Base):
     customer = models.ForeignKey(verbose_name="مشتری", to="user.User", on_delete=models.PROTECT)
+    history = HistoricalRecords(
+        history_user_id_field=models.IntegerField(null=True, blank=True),
+        history_user_getter=history_user_getter,
+        history_user_setter=history_suer_setter,
+    )
 
     def __str__(self):
         return 'فاکتور شماره {} کاربر {}'.format(self.id, self.customer)
@@ -27,6 +33,11 @@ class InvoiceItem(Base):
         expression=F("price") * F("count"),
         output_field=models.PositiveIntegerField(),
         db_persist=False,
+    )
+    history = HistoricalRecords(
+        history_user_id_field=models.IntegerField(null=True, blank=True),
+        history_user_getter=history_user_getter,
+        history_user_setter=history_suer_setter,
     )
 
     def __str__(self):

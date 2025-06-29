@@ -9,3 +9,6 @@ venv/
 
 # database
 db.sqlite3
+
+# log database
+history_db.sqlite3

@@ -1,6 +1,7 @@
 from django.db import models
-
-from base.models import Base
+from django_jalali.db import models as jmodels
+from simple_history.models import HistoricalRecords
+from base.models import Base, history_suer_setter, history_user_getter
 
 class Product(Base):
     name = models.CharField(verbose_name="عنوان محصول", max_length=100)
@@ -9,6 +10,11 @@ class Product(Base):
     sell_price = models.PositiveIntegerField(
         verbose_name="قیمت فروش",
         help_text="مقدار این فیلد به شما کمک خواهد کرد تا از فروش به قیمت کمتر از این مقدار جلوگیری بکنید",
+    )
+    history = HistoricalRecords(
+        history_user_id_field=models.IntegerField(null=True, blank=True),
+        history_user_getter=history_user_getter,
+        history_user_setter=history_suer_setter,
     )
 
     class Meta:
@@ -30,6 +36,12 @@ class WarehouseItem(Base):
         unique=True,
     )
     stock_level = models.PositiveIntegerField(verbose_name="تعداد محصول موجود در انبار", default=True)
+    history = HistoricalRecords(
+        history_user_id_field=models.IntegerField(null=True, blank=True),
+        history_user_getter=history_user_getter,
+        history_user_setter=history_suer_setter,
+    )
+
     class Meta:
         verbose_name = "دارایی انبار"
         verbose_name_plural = "دارایی های انبار"
