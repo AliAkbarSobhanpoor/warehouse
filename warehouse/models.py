@@ -35,7 +35,6 @@ class WarehouseItem(Base):
         related_name="warehouse_item",
         unique=True,
     )
-    stock_level = models.PositiveIntegerField(verbose_name="تعداد محصول موجود در انبار", default=True)
     history = HistoricalRecords(
         history_user_id_field=models.IntegerField(null=True, blank=True),
         history_user_getter=history_user_getter,

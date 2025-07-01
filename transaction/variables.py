@@ -1,0 +1,1 @@
+INVOICE_TYPE_CHOICE = (("buy", "خرید"), ("sell", "فروش"))

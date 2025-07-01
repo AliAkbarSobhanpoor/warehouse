@@ -8,7 +8,12 @@ from warehouse.models import Product
 
 
 class Invoice(Base):
-    customer = models.ForeignKey(verbose_name="مشتری", to="user.User", on_delete=models.PROTECT)
+    invoice_type = models.CharField(verbose_name="نوع فاکتور", max_length=10, choices=INVOICE_TYPE_CHOICE, default=INVOICE_TYPE_CHOICE[0][0])
+    customer = models.ForeignKey(verbose_name="مشتری", to="user.User", on_delete=models.PROTECT) # buy invoice customer always is me.
+
+    # we can create a finalized approach here to change the default workspace. and if a factor is not finalized.
+    # don't use it in warehouse available items.
+
     history = HistoricalRecords(
         history_user_id_field=models.IntegerField(null=True, blank=True),
         history_user_getter=history_user_getter,
