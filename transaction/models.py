@@ -15,12 +15,6 @@ class Invoice(Base):
     # we can create a finalized approach here to change the default workspace. and if a factor is not finalized.
     # don't use it in warehouse available items.
 
-    history = HistoricalRecords(
-        history_user_id_field=models.IntegerField(null=True, blank=True),
-        history_user_getter=history_user_getter,
-        history_user_setter=history_suer_setter,
-    )
-
     def __str__(self):
         if self.invoice_type == INVOICE_TYPE_CHOICE[0][0]:
             invoice_type = INVOICE_TYPE_CHOICE[0][1]
@@ -43,11 +37,6 @@ class InvoiceItem(Base):
         expression=F("price") * F("count"),
         output_field=models.PositiveIntegerField(),
         db_persist=False,
-    )
-    history = HistoricalRecords(
-        history_user_id_field=models.IntegerField(null=True, blank=True),
-        history_user_getter=history_user_getter,
-        history_user_setter=history_suer_setter,
     )
 
     def __str__(self):

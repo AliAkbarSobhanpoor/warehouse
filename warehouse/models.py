@@ -11,11 +11,6 @@ class Product(Base):
         verbose_name="قیمت فروش",
         help_text="مقدار این فیلد به شما کمک خواهد کرد تا از فروش به قیمت کمتر از این مقدار جلوگیری بکنید",
     )
-    history = HistoricalRecords(
-        history_user_id_field=models.IntegerField(null=True, blank=True),
-        history_user_getter=history_user_getter,
-        history_user_setter=history_suer_setter,
-    )
 
     class Meta:
         verbose_name = "محصول"
@@ -34,11 +29,6 @@ class WarehouseItem(Base):
         on_delete=models.PROTECT,
         related_name="warehouse_item",
         unique=True,
-    )
-    history = HistoricalRecords(
-        history_user_id_field=models.IntegerField(null=True, blank=True),
-        history_user_getter=history_user_getter,
-        history_user_setter=history_suer_setter,
     )
 
     class Meta:

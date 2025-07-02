@@ -1,6 +1,8 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django_jalali.db import models as jmodels
+from simple_history.models import HistoricalRecords
+
 from user.models import User
 
 # history models setter and getter -------------------------------------------------------------------------------------
@@ -41,7 +43,12 @@ class Base(models.Model):
         to="user.User",
         on_delete=models.CASCADE,
         related_name="%(app_label)s_%(class)s_updated_by"
+    )
 
+    history = HistoricalRecords(
+        history_user_id_field=models.IntegerField(null=True, blank=True),
+        history_user_getter=history_user_getter,
+        history_user_setter=history_suer_setter,
     )
 
     class Meta:
