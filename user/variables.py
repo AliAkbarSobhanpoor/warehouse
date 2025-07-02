@@ -1,0 +1,1 @@
+ROLES = (("shopkeeper","مغازه دار"), ("visitor","ویزیتور"))

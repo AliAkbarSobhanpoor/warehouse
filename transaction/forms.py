@@ -16,7 +16,6 @@ class InvoiceAdminForm(BaseForm):
 
     def __init__(self, *args, **kwargs):
         super(InvoiceAdminForm, self).__init__(*args, **kwargs)
-        # exclude the user model itself.
 
     def clean(self):
         cleaned_data = super(InvoiceAdminForm, self).clean()
