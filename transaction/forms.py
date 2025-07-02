@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 
 from base.forms import BaseForm
 from transaction import models
+from transaction.functions import get_max_price_for_purchase_a_product
 from transaction.variables import INVOICE_TYPE_CHOICE
 from warehouse.functions import get_available_stock_level
 from warehouse.models import Product
@@ -37,6 +38,10 @@ class InVoiceItemAdminFrom(BaseForm):
         product: Product = cleaned_data.get("product")
         count: int = cleaned_data.get("count")
         invoice: models.Invoice = cleaned_data.get("invoice")
+        price: int = cleaned_data.get('price')
         product_available_stock_level: int = get_available_stock_level(product.id)
+        max_purchase_price = get_max_price_for_purchase_a_product(product.id)
         if invoice.invoice_type == INVOICE_TYPE_CHOICE[1][0] and count > product_available_stock_level:
             self.add_error("count", "تنها {} شل از {} در انبار موجود است".format(product_available_stock_level, product))
+        if price < max_purchase_price:
+            self.add_error("price", "قیمت فروش نمیتواند کمتر از بیشترین قیمت خرید ({}) باشد.".format(max_purchase_price))
