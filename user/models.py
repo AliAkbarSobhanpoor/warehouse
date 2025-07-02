@@ -13,5 +13,9 @@ class Customer(Base):
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
 
+    class Meta:
+        verbose_name = "مشتری"
+        verbose_name_plural = "مشتریان"
+
 class User(AbstractUser):
     pass

@@ -5,6 +5,7 @@ from base.forms import BaseForm
 from transaction import models
 from transaction.functions import get_max_price_for_purchase_a_product
 from transaction.variables import INVOICE_TYPE_CHOICE
+from user.variables import ROLES
 from warehouse.functions import get_available_stock_level
 from warehouse.models import Product
 
@@ -21,10 +22,10 @@ class InvoiceAdminForm(BaseForm):
         cleaned_data = super(InvoiceAdminForm, self).clean()
         customer: get_user_model() = cleaned_data.get("customer")
         invoice_type: str = cleaned_data.get("invoice_type")
-        if invoice_type == INVOICE_TYPE_CHOICE[1][0] and customer.id == 1:
-            self.add_error("customer", "امکان فروش آیتم به خودتان از شما گرفته شده است.")
-        if invoice_type == INVOICE_TYPE_CHOICE[0][0] and customer.id != 1:
-            self.add_error("customer", "فعلا فقط امکان خرید برای خود شما وجود دارد. و فاکتور خرید به نام فرد دیگری نمیتوانید تقاضا دهید.")
+        if invoice_type == INVOICE_TYPE_CHOICE[1][0] and customer.role == ROLES[2][0]:
+            self.add_error("customer", "فقط انباردار میتواند فاکتور خرید ثبت بکند.")
+        if invoice_type == INVOICE_TYPE_CHOICE[1][0] and customer.role != ROLES[2][0]:
+            self.add_error("customer", "امکان ثبت فاکتور فروش به نام انباردار وجود ندارد.")
 
 
 class InVoiceItemAdminFrom(BaseForm):
@@ -42,5 +43,5 @@ class InVoiceItemAdminFrom(BaseForm):
         max_purchase_price = get_max_price_for_purchase_a_product(product.id)
         if invoice.invoice_type == INVOICE_TYPE_CHOICE[1][0] and count > product_available_stock_level:
             self.add_error("count", "تنها {} شل از {} در انبار موجود است".format(product_available_stock_level, product))
-        if price < max_purchase_price:
+        if invoice.invoice_type == INVOICE_TYPE_CHOICE[1][0] and price < max_purchase_price:
             self.add_error("price", "قیمت فروش نمیتواند کمتر از بیشترین قیمت خرید ({}) باشد.".format(max_purchase_price))

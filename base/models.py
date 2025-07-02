@@ -3,8 +3,6 @@ from django.db import models
 from django_jalali.db import models as jmodels
 from simple_history.models import HistoricalRecords
 
-from user.models import User
-
 # history models setter and getter -------------------------------------------------------------------------------------
 
 def history_user_getter(historical_instance):
@@ -46,6 +44,7 @@ class Base(models.Model):
     )
 
     history = HistoricalRecords(
+        inherit=True,
         history_user_id_field=models.IntegerField(null=True, blank=True),
         history_user_getter=history_user_getter,
         history_user_setter=history_suer_setter,

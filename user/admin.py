@@ -2,8 +2,9 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-
+from base.admin import BaseModelAdmin
+from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomerAdminForm
+from user.models import Customer
 
 @admin.register(get_user_model())
 class CustomUserAdmin(UserAdmin):
@@ -27,3 +28,12 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('username', 'email', 'password1', 'password2'),
         }),
     )
+
+@admin.register(Customer)
+class CustomerAdmin(BaseModelAdmin):
+    form = CustomerAdminForm
+    list_display = [
+        'first_name',
+        'last_name',
+        'role'
+    ]
