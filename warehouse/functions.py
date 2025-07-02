@@ -11,7 +11,7 @@ def get_total_purchase_of_product(product_id: int) -> int:
         product_id=product_id,
         invoice__invoice_type=INVOICE_TYPE_CHOICE[0][0],
     ).aggregate(
-        total_count=Sum("count")
+        total_count=Sum("count", default=0)
     )["total_count"]
     return total_purchase
 
@@ -20,7 +20,7 @@ def get_total_sell_of_product(product_id:int) -> int:
         product_id=product_id,
         invoice__invoice_type=INVOICE_TYPE_CHOICE[1][0],
     ).aggregate(
-        total_count=Sum("count")
+        total_count=Sum("count", default=0)
     )["total_count"]
     return total_sell
 
@@ -35,4 +35,4 @@ def get_available_stock_level(product_id:int) -> int:
     """
     purchased_items: int = get_total_purchase_of_product(product_id)
     sell_items: int = get_total_sell_of_product(product_id)
-    return purchased_items - sell_items # if this return negative value then some thing is wrong.
+    return purchased_items - sell_items # if this return negative value then something is wrong.

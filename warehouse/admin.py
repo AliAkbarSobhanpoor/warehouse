@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import Product, WarehouseItem
 from base.admin import BaseModelAdmin
 from . import forms
-
+from .functions import get_available_stock_level
 
 @admin.register(Product)
 class ProductAdmin(BaseModelAdmin):
@@ -23,7 +23,10 @@ class WarehouseItemAdmin(BaseModelAdmin):
     form = forms.WarehouseItemAdminForm
     list_display = (
         "product",
-        "stock_level",
+        "stock_level"
     )
-    list_filter = ("stock_level",)
+
+    def stock_level(self, obj: WarehouseItem):
+        return get_available_stock_level(obj.product.id)
+    stock_level.short_description = "موجودی انبار"
     raw_id_fields = ("product",)

@@ -27,10 +27,10 @@ class InvoiceAdmin(BaseModelAdmin):
     Admin configuration for the Invoice model.
     """
     form = InvoiceAdminForm
-    list_display = ('id', 'customer', 'get_total_invoice_price', 'created_at', 'updated_at')
+    list_display = ('id', 'customer', 'invoice_type' ,'get_total_invoice_price', 'created_at', 'updated_at',)
     list_display_links = ('id', 'customer',)
     search_fields = ('customer__username', 'customer__first_name', 'customer__last_name')
-    list_filter = ('created_at', 'updated_at')
+    list_filter = ('created_at', 'updated_at', "invoice_type")
     inlines = [InvoiceItemInline]
 
     def get_total_invoice_price(self, obj):

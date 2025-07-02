@@ -5,7 +5,7 @@ from simple_history.models import HistoricalRecords
 from base.models import Base, history_suer_setter, history_user_getter
 from user.models import User
 from warehouse.models import Product
-
+from transaction.variables import INVOICE_TYPE_CHOICE
 
 class Invoice(Base):
     invoice_type = models.CharField(verbose_name="نوع فاکتور", max_length=10, choices=INVOICE_TYPE_CHOICE, default=INVOICE_TYPE_CHOICE[0][0])

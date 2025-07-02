@@ -11,4 +11,4 @@ class ProductAdminForm(BaseForm):
 class WarehouseItemAdminForm(BaseForm):
     class Meta:
         model = WarehouseItem
-        fields = ["product", "stock_level"]
+        fields = ["product"]
