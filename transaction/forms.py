@@ -39,7 +39,8 @@ class InVoiceItemAdminFrom(BaseForm):
         count: int = cleaned_data.get("count")
         invoice: models.Invoice = cleaned_data.get("invoice")
         price: int = cleaned_data.get('price')
-        product_available_stock_level: int = get_available_stock_level(product.id)
+        current_item_id = self.instance.id if self.instance and self.instance.pk else None
+        product_available_stock_level: int = get_available_stock_level(product.id, current_item_id)
         max_purchase_price = get_max_price_for_purchase_a_product(product.id)
         if invoice.invoice_type == INVOICE_TYPE_CHOICE[1][0] and count > product_available_stock_level:
             self.add_error("count", "تنها {} شل از {} در انبار موجود است".format(product_available_stock_level, product))
