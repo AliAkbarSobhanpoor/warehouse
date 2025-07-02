@@ -5,7 +5,7 @@ from simple_history.models import HistoricalRecords
 from base.models import Base, history_suer_setter, history_user_getter
 from user.models import User
 from warehouse.models import Product
-from transaction.variables import INVOICE_TYPE_CHOICE
+from transaction.variables import INVOICE_TYPE_CHOICE, CREDIT_TYPE_CHOICE
 
 
 class Invoice(Base):
@@ -26,6 +26,13 @@ class Invoice(Base):
         verbose_name = "فاکتور"
         verbose_name_plural = "فاکتور ها"
 
+    @property
+    def calculate_invoice_total_price(self):
+        return InvoiceItem.objects.filter(
+            invoice=self.id
+        ).aggregate(
+            total_price=Sum('total_price', default=0)
+        )['total_price']
 
 class InvoiceItem(Base):
     invoice = models.ForeignKey(verbose_name="فاکتور", to="transaction.Invoice", on_delete=models.PROTECT, related_name="invoice_item")
@@ -46,3 +53,30 @@ class InvoiceItem(Base):
         verbose_name = "آیتم فاکتور"
         verbose_name_plural = "آیتم های فاکتور"
         unique_together = ('invoice', 'product')
+
+class Credit(Base): # after this you can implement a payment. for manual . bank and so on.
+    customer = models.ForeignKey(
+        verbose_name="مشتری",
+        to="user.Customer",
+        on_delete=models.PROTECT,
+        related_name="credits",
+    )
+    invoice = models.ForeignKey(
+        verbose_name="فاکتور",
+        to="transaction.Invoice",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    credit_type = models.CharField( # for purchase a negative credit is created. for payments a positive credit.
+        verbose_name="نوع اعتبار",
+        max_length=10,
+        choices=CREDIT_TYPE_CHOICE,default=CREDIT_TYPE_CHOICE[0][0]
+    )
+    amount = models.PositiveIntegerField(verbose_name="مقدار اعتبار", default=0)
+    reason = models.TextField(verbose_name="توضیحات", help_text="مثلا پرداخت فاکتور، هدیه، اصلاح حساب و ...")
+
+    class Meta:
+        verbose_name = "اعتبار"
+        verbose_name_plural = "اعتبارات"
+        ordering = ['-created_at']

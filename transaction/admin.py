@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 from base.forms import BaseFormSet
-from .forms import InvoiceAdminForm, InVoiceItemAdminFrom
-from .models import Invoice, InvoiceItem
+from .forms import InvoiceAdminForm, InVoiceItemAdminFrom, CreditAdminForm
+from .models import Invoice, InvoiceItem, Credit
 from base.admin import BaseModelAdmin
 
 class InvoiceItemInline(admin.TabularInline):
@@ -38,7 +38,7 @@ class InvoiceAdmin(BaseModelAdmin):
     get_total_invoice_price.short_description = "قیمت کل فاکتور"
 
 @admin.register(InvoiceItem)
-class InvoiceItemAdmin(admin.ModelAdmin):
+class InvoiceItemAdmin(BaseModelAdmin):
     """
     Admin configuration for the InvoiceItem model (though often managed via InvoiceInline).
     """
@@ -48,3 +48,9 @@ class InvoiceItemAdmin(admin.ModelAdmin):
     readonly_fields = ('total_price',)
     search_fields = ('invoice__id', 'product__name')
     list_filter = ('invoice', 'product', 'created_at', 'updated_at')
+
+
+@admin.register(Credit)
+class CreditAdmin(BaseModelAdmin):
+    form = CreditAdminForm
+    list_display = ['customer', 'invoice', 'credit_type', 'amount']

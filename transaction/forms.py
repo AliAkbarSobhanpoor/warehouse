@@ -23,9 +23,9 @@ class InvoiceAdminForm(BaseForm):
         customer: get_user_model() = cleaned_data.get("customer")
         invoice_type: str = cleaned_data.get("invoice_type")
         if invoice_type == INVOICE_TYPE_CHOICE[1][0] and customer.role == ROLES[2][0]:
-            self.add_error("customer", "فقط انباردار میتواند فاکتور خرید ثبت بکند.")
-        if invoice_type == INVOICE_TYPE_CHOICE[1][0] and customer.role != ROLES[2][0]:
             self.add_error("customer", "امکان ثبت فاکتور فروش به نام انباردار وجود ندارد.")
+        if invoice_type == INVOICE_TYPE_CHOICE[0][0] and customer.role != ROLES[2][0]:
+            self.add_error("customer", "فاکتور خرید فقط میتواند به نام انباردار ثبت شود.")
 
 
 class InVoiceItemAdminFrom(BaseForm):
@@ -45,3 +45,9 @@ class InVoiceItemAdminFrom(BaseForm):
             self.add_error("count", "تنها {} شل از {} در انبار موجود است".format(product_available_stock_level, product))
         if invoice.invoice_type == INVOICE_TYPE_CHOICE[1][0] and price < max_purchase_price:
             self.add_error("price", "قیمت فروش نمیتواند کمتر از بیشترین قیمت خرید ({}) باشد.".format(max_purchase_price))
+
+
+class CreditAdminForm(BaseForm):
+    class Meta:
+        model = models.Credit  # don't forget for dad remove the invoice field. not required there, dad breaks the implementation
+        fields = ["customer", "invoice", "credit_type", "amount", "reason"]
