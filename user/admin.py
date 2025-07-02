@@ -1,10 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
-
 from base.admin import BaseModelAdmin
+from warehouse.functions import get_customer_total_price
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomerAdminForm
 from user.models import Customer
+
 
 @admin.register(get_user_model())
 class CustomUserAdmin(UserAdmin):
@@ -29,11 +30,16 @@ class CustomUserAdmin(UserAdmin):
         }),
     )
 
+
 @admin.register(Customer)
 class CustomerAdmin(BaseModelAdmin):
     form = CustomerAdminForm
     list_display = [
         'first_name',
         'last_name',
-        'role'
+        'role',
+        'total_credit',
     ]
+    def total_credit(self, obj):
+        return get_customer_total_price(obj.id)
+    total_credit.short_description = "اعتبار کل"

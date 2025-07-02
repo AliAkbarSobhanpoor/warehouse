@@ -1,6 +1,4 @@
-from django import forms
 from django.contrib.auth import get_user_model
-
 from base.forms import BaseForm
 from transaction import models
 from transaction.functions import get_max_price_for_purchase_a_product

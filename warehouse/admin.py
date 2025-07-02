@@ -15,6 +15,6 @@ class ProductAdmin(BaseModelAdmin):
         "stock_level"
     )
     def stock_level(self, obj: Product):
-        return get_available_stock_level(obj.id)
+        return get_available_stock_level(obj.id, None)
     stock_level.short_description = "موجودی انبار"
     search_fields = ("name",)

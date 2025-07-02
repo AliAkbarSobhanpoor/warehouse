@@ -1,8 +1,6 @@
 from django.db import models
 from django.db.models import F, Sum
-from simple_history.models import HistoricalRecords
-
-from base.models import Base, history_suer_setter, history_user_getter
+from base.models import Base
 from user.models import User
 from warehouse.models import Product
 from transaction.variables import INVOICE_TYPE_CHOICE, CREDIT_TYPE_CHOICE
@@ -34,6 +32,7 @@ class Invoice(Base):
             total_price=Sum('total_price', default=0)
         )['total_price']
 
+
 class InvoiceItem(Base):
     invoice = models.ForeignKey(verbose_name="فاکتور", to="transaction.Invoice", on_delete=models.PROTECT, related_name="invoice_item")
     product = models.ForeignKey(verbose_name="محصول", to="warehouse.Product", on_delete=models.PROTECT, related_name="product_invoice_item")
@@ -53,6 +52,7 @@ class InvoiceItem(Base):
         verbose_name = "آیتم فاکتور"
         verbose_name_plural = "آیتم های فاکتور"
         unique_together = ('invoice', 'product')
+
 
 class Credit(Base): # after this you can implement a payment. for manual . bank and so on.
     customer = models.ForeignKey(

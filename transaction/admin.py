@@ -1,9 +1,9 @@
 from django.contrib import admin
-
 from base.forms import BaseFormSet
 from .forms import InvoiceAdminForm, InVoiceItemAdminFrom, CreditAdminForm
 from .models import Invoice, InvoiceItem, Credit
 from base.admin import BaseModelAdmin
+
 
 class InvoiceItemInline(admin.TabularInline):
     form = InVoiceItemAdminFrom
@@ -21,6 +21,7 @@ class InvoiceItemInline(admin.TabularInline):
                 super().__init__(*args, **kwargs_inner)
         return FormSetWithUser
 
+
 @admin.register(Invoice)
 class InvoiceAdmin(BaseModelAdmin):
     """
@@ -36,6 +37,7 @@ class InvoiceAdmin(BaseModelAdmin):
     def get_total_invoice_price(self, obj):
         return sum(item.total_price for item in obj.invoice_item.all())
     get_total_invoice_price.short_description = "قیمت کل فاکتور"
+
 
 @admin.register(InvoiceItem)
 class InvoiceItemAdmin(BaseModelAdmin):
