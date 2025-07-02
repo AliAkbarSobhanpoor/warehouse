@@ -21,7 +21,11 @@ class Invoice(Base):
     )
 
     def __str__(self):
-        return 'فاکتور شماره {} کاربر {}'.format(self.id, self.customer)
+        if self.invoice_type == INVOICE_TYPE_CHOICE[0][0]:
+            invoice_type = INVOICE_TYPE_CHOICE[0][1]
+        else:
+            invoice_type = INVOICE_TYPE_CHOICE[1][1]
+        return 'فاکتور {} شماره {} کاربر {}'.format(invoice_type, self.id, self.customer)
 
     class Meta:
         verbose_name = "فاکتور"
