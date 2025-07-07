@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {# this is for storekeeper login only other users user login and register #}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ورود انباردار</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static "adminlte_statics/plugins/fontawesome-free/css/all.min.css" %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static "adminlte_statics/dist/css/adminlte.min.css" %}">
+    <!-- RTL style -->
+<link rel="stylesheet" href="{% static "adminlte_statics/dist/css/rtl.css" %}">
+</head>
+<body class="hold-transition lockscreen" dir="rtl">
+    <!-- Automatic element centering -->
+    <div class="lockscreen-wrapper">
+        <!-- User name -->
+        <div class="lockscreen-name">{{ form.storekeeper.customer_profile }}</div> {# here we need storekeeper user #}
+        <div class="lockscreen-item" style="margin: 10px auto !important;">
+{#        <div class="lockscreen-image">#}
+{#            <img src="" alt="User Image">#}
+{#        </div>#}
+
+            <!-- lockscreen credentials (contains the form) -->
+            <form class="lockscreen-credentials" method="post" action="{% url "storekeeper-login-view" %}">
+                <div class="input-group">
+                    {% csrf_token %}
+                    {{ form.password }}
+                    <div class="input-group-append">
+                        <button type="submit" class="btn">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="error-content lockscreen-errors" style="color: red;">
+            <small>
+                {% for error in form.password.errors %}
+                    {{ error }}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    {{ error }}
+                {% endfor %}
+            </small>
+        </div>
+        <!-- /.lockscreen-item -->
+{#        <div class="text-center">#}
+{#            <a href="login.html">یا با کاربری دیگری وارد شوید</a>#}
+{#        </div>#}
+        <div class="lockscreen-footer text-center">
+            ساخته شده با ❤️ توسط علی‌اکبر سبحانپور
+        </div>
+    </div>
+    <!-- /.center -->
+
+    <!-- jQuery -->
+    <script src="{% static "adminlte_statics/plugins/jquery/jquery.min.js" %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static "adminlte_statics/plugins/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+</body>
+<style>
+    .lockscreen-errors {
+        border-color: red;
+        border-radius: 4px;
+        margin: 10px auto 30px;
+        padding: 0;
+        position: relative;
+        width: 290px;
+    }
+</style>
+</html>
+

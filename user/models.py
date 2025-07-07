@@ -5,7 +5,7 @@ from base.models import Base
 from user.variables import ROLES
 
 class Customer(Base):
-    user = models.OneToOneField(verbose_name="اکانت", to="user.User", on_delete=models.PROTECT, null=True, blank=True)
+    user = models.OneToOneField(verbose_name="اکانت", to="user.User", on_delete=models.PROTECT, null=True, blank=True, related_name="customer_profile")
     role = models.CharField(verbose_name="نقش کاربر", choices=ROLES, max_length=15, default=ROLES[0][0])
     first_name = models.CharField(verbose_name="نام", max_length=200)
     last_name = models.CharField(verbose_name='نام خانوادگی', max_length=200)
