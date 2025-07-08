@@ -2,8 +2,8 @@
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
         with font-awesome or any other icon font library -->
-        <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+        <li class="nav-item">
+            <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     انبار
@@ -12,8 +12,54 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{% url 'product-list-view' %}" class="nav-link active">
+                    <a href="{% url 'product-list-view' %}" class="nav-link">
                         <p>محصولات انبار</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link ">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    مالی
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{% url 'product-list-view' %}" class="nav-link">
+                        <p>لیست فاکتور ها</p>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{% url 'product-list-view' %}" class="nav-link">
+                        <p>اعتبار مشتریان</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    امور کاربران
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{% url 'product-list-view' %}" class="nav-link">
+                        <p>لیست کاربران</p>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{% url 'product-list-view' %}" class="nav-link">
+                        <p>لیست مشتریان</p>
                     </a>
                 </li>
             </ul>

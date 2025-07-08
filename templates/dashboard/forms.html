@@ -1,0 +1,91 @@
+{% extends "dashboard/_main.html" %}
+{% load django_tables2 %}
+{% load render_table from django_tables2 %}
+{% block page_content %}
+    <div class="m-4">
+        <form method="post" id="mainForm">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">{{ is_update|yesno:"ویرایش,ساخت" }}</button>
+        </form>
+    </div>
+    <script>
+        function addThousandSeparator(num) {
+            let cleanNum = num.toString().replace(/[^\d.-]/g, '');
+            if (cleanNum === '' || cleanNum === '-') {
+                return cleanNum;
+            }
+            let parts = cleanNum.split('.');
+            let integerPart = parts[0];
+            let decimalPart = parts[1];
+            let isNegative = integerPart.startsWith('-');
+            if (isNegative) {
+                integerPart = integerPart.substring(1);
+            }
+            integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            let result = isNegative ? '-' + integerPart : integerPart;
+            if (decimalPart !== undefined) {
+                result += '.' + decimalPart;
+            }
+            return result;
+        }
+
+        function removeThousandSeparator(num) {
+            return num.replace(/,/g, '');
+        }
+
+        function formatExistingValues(className = 'number-input') {
+            const numberInputs = document.querySelectorAll(`.${className}`);
+            numberInputs.forEach(input => {
+                if (input.value && input.value.trim() !== '') {
+                    input.value = addThousandSeparator(input.value);
+                }
+            });
+        }
+
+        function initializeThousandSeparator(className = 'number-input') {
+            const numberInputs = document.querySelectorAll(`.${className}`);
+            numberInputs.forEach(input => {
+                input.addEventListener('input', function(e) {
+                    const cursorPos = e.target.selectionStart;
+                    const formattedValue = addThousandSeparator(e.target.value);
+                    const lengthDiff = formattedValue.length - e.target.value.length;
+                    e.target.value = formattedValue;
+                    setTimeout(() => {
+                        const newPos = cursorPos + lengthDiff;
+                        e.target.setSelectionRange(newPos, newPos);
+                    }, 0);
+                });
+            });
+        }
+
+        function removeFormattingOnSubmit(formSelector, inputClassName = 'number-input') {
+            const form = document.querySelector(formSelector);
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                // Remove formatting from number inputs before submission
+                const numberInputs = form.querySelectorAll(`.${inputClassName}`);
+                numberInputs.forEach(input => {
+                    if (input.value) {
+                        input.value = removeThousandSeparator(input.value);
+                    }
+                });
+
+                // Let the form submit normally (don't prevent default)
+                // The form will now submit with clean numeric values
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Format existing values on page load
+            formatExistingValues('number-input');
+
+            // Initialize thousand separator for new input
+            initializeThousandSeparator('number-input');
+
+            // Remove formatting on form submit
+            removeFormattingOnSubmit('#mainForm', 'number-input');
+        });
+    </script>
+{% endblock %}
