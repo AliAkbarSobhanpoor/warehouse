@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # modules
     "django_jalali",
     "simple_history",
+    "django_tables2",
 ]
 
 MIDDLEWARE = [

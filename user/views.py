@@ -3,8 +3,10 @@ from django.shortcuts import render
 from django.views.generic import FormView
 from django.urls import reverse_lazy
 from django.views import View
-from user.forms import StorekeeperLoginForm
 
+from base.views import StoreKeeperViLoginRequiredMixin
+from user.forms import StorekeeperLoginForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -19,7 +21,9 @@ class StorekeeperLoginView(FormView):
         return super().form_valid(form)
 
 
-class DashboardView(View):
+class DashboardView(StoreKeeperViLoginRequiredMixin, View):
     def get(self, request):
-        context = {}
+        context = {
+            "title": "داشبورد"
+        }
         return render(request, "dashboard/main.html", context)
