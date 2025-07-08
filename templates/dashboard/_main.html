@@ -160,8 +160,8 @@
       <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6 d-flex align-items-center">
+                <h1 class="m-2">{{ title }}</h1>
                 {% if creation_link and creation_link.title and creation_link.link %}
-                    <h1 class="m-2">{{ title }}</h1>
                     <a href="{{ creation_link.link }}" class="btn btn-dark">{{ creation_link.title }}</a>
                 {% endif %}
           </div>

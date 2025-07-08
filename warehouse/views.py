@@ -58,4 +58,5 @@ class ProductCreateAndUpdateView(StoreKeeperViLoginRequiredMixin, BaseFormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["is_update"] = self.object is not None
+        context["title"] = "ویرایش محصول" if self.object else "ایجاد محصول"
         return context
