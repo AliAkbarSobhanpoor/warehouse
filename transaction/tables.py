@@ -1,6 +1,7 @@
 import django_tables2 as tables
 from django.utils.safestring import mark_safe
 
+from base.functions import thousand_separators
 from base.tables import BaseTable
 from transaction.models import Invoice, Credit
 from transaction.variables import INVOICE_TABLE_FIELDS, CREDIT_TABLE_FIELDS, CREDIT_TYPE_CHOICE
@@ -29,10 +30,10 @@ class CreditTables(BaseTable):
         if record.credit_type == CREDIT_TYPE_CHOICE[0][0]:
             return mark_safe(
                 # language=html
-                "<p class='text-success'>{}</p>".format(value)
+                "<p class='text-success'>{}</p>".format(thousand_separators(value))
             )
         else:
             return mark_safe(
                 # language=html
-                "<p class='text-danger'>{}</p>".format(value)
+                "<p class='text-danger'>{}</p>".format(thousand_separators(value))
             )

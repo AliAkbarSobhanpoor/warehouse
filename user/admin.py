@@ -5,6 +5,7 @@ from base.admin import BaseModelAdmin
 from warehouse.functions import get_customer_total_price
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomerAdminForm
 from user.models import Customer
+from .variables import CUSTOMER_TABLE_FIELDS
 
 
 @admin.register(get_user_model())
@@ -34,12 +35,7 @@ class CustomUserAdmin(UserAdmin):
 @admin.register(Customer)
 class CustomerAdmin(BaseModelAdmin):
     form = CustomerAdminForm
-    list_display = [
-        'first_name',
-        'last_name',
-        'role',
-        'total_credit',
-    ]
+    list_display = [*CUSTOMER_TABLE_FIELDS]
     def total_credit(self, obj):
         return get_customer_total_price(obj.id)
     total_credit.short_description = "اعتبار کل"
