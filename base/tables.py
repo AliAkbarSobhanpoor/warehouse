@@ -20,5 +20,5 @@ class BaseTable(tables.Table):
     def render_updated_at_by(self, value, **kwargs):
         record = kwargs.get("record")
         return f"""
-            {record.updated_at.strftime("%Y-%m-%d %H:%M:%S")} , {record.created_by}
+            {record.updated_at.strftime("%Y-%m-%d %H:%M:%S")} , {record.updated_by}
         """

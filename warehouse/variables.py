@@ -1,0 +1,1 @@
+PRODUCT_TABLE_FIELD = ["name", "price_label", "shell_item_count", "stock_level"]

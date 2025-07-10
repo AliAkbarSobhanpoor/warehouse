@@ -5,6 +5,7 @@ from base.functions import thousand_separators
 from base.tables import BaseTable
 from .functions import get_available_stock_level
 from .models import Product
+from .variables import PRODUCT_TABLE_FIELD
 
 
 class ProductTable(BaseTable):
@@ -13,10 +14,7 @@ class ProductTable(BaseTable):
     class Meta:
         model = Product
         template_name = "django_tables2/bootstrap4.html"
-        fields = (
-            "row_number", "name", "price_label", "shell_item_count", "stock_level", 'created_at_by', 'updated_at_by',
-            'operations',
-        )
+        fields = ("row_number", *PRODUCT_TABLE_FIELD, 'created_at_by', 'updated_at_by', 'operations', )
 
     def render_price_label(self, value, **kwargs):
         return  thousand_separators(value)

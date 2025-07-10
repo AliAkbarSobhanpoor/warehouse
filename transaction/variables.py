@@ -15,3 +15,11 @@ SYSTEMATIC_CREDIT_REASON_CHOICE = (
     "اپدیت فاکتور به شماره {}",
     "حذف فاکتور به شماره {}",
 )
+
+INVOICE_TABLE_FIELDS =  [
+    'id', 'customer', 'invoice_type' ,'get_total_invoice_price',
+]
+
+CREDIT_TABLE_FIELDS = [
+    'customer', 'invoice', 'credit_type', 'amount'
+]

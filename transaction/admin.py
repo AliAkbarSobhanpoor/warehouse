@@ -3,6 +3,7 @@ from base.forms import BaseFormSet
 from .forms import InvoiceAdminForm, InVoiceItemAdminFrom, CreditAdminForm
 from .models import Invoice, InvoiceItem, Credit
 from base.admin import BaseModelAdmin
+from .variables import INVOICE_TABLE_FIELDS, CREDIT_TABLE_FIELDS
 
 
 class InvoiceItemInline(admin.TabularInline):
@@ -28,7 +29,7 @@ class InvoiceAdmin(BaseModelAdmin):
     Admin configuration for the Invoice model.
     """
     form = InvoiceAdminForm
-    list_display = ('id', 'customer', 'invoice_type' ,'get_total_invoice_price', 'created_at', 'updated_at',)
+    list_display = (*INVOICE_TABLE_FIELDS,)
     list_display_links = ('id', 'customer',)
     search_fields = ('customer__username', 'customer__first_name', 'customer__last_name')
     list_filter = ('created_at', 'updated_at', "invoice_type")
@@ -55,4 +56,4 @@ class InvoiceItemAdmin(BaseModelAdmin):
 @admin.register(Credit)
 class CreditAdmin(BaseModelAdmin):
     form = CreditAdminForm
-    list_display = ['customer', 'invoice', 'credit_type', 'amount']
+    list_display = (*CREDIT_TABLE_FIELDS,)
