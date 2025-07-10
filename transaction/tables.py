@@ -1,4 +1,5 @@
 import django_tables2 as tables
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from base.functions import thousand_separators
@@ -19,6 +20,11 @@ class InVoiceTable(BaseTable):
         record = kwargs.get("record")
         return thousand_separators(sum(item.total_price for item in record.invoice_item.all()))
 
+    def render_operations(self, record, **kwargs):
+        # language=html
+        return mark_safe("""
+            <a href='{}'>مشاهده جزئیات</a>
+        """.format(reverse("invoice-detail-view", args=[record.id])))
 
 class CreditTables(BaseTable):
     class Meta:

@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models import F, Sum
 from base.models import Base
-from user.models import User
 from warehouse.models import Product
 from transaction.variables import INVOICE_TYPE_CHOICE, CREDIT_TYPE_CHOICE
 

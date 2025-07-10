@@ -41,7 +41,7 @@ def get_available_stock_level(product_id:int, exclude_item_id:int | None) -> int
     return purchased_items - sell_items # if this return negative value then something is wrong.
 
 
-def get_customer_total_price(customer_id:int) -> int:
+def get_customer_total_balance(customer_id:int) -> int:
     positive_credits_total_price = Credit.objects.filter(
         customer_id=customer_id,
         credit_type=CREDIT_TYPE_CHOICE[0][0]

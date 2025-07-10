@@ -1,0 +1,145 @@
+{% extends "dashboard/_main.html" %}
+{% load jformat %}
+{% load math_filter %}
+
+{% block page_content %}
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="callout callout-info">
+              <h5><i class="fas fa-info"></i> نکته:</h5>
+              این صفحه جهت پرینت آماده شده است ، میتوانید برای تست بر روی دکمه پرنت پایین صفحه کلیک نمایید.
+            </div>
+
+
+            <!-- Main content -->
+            <div class="invoice p-3 mb-3">
+              <!-- title row -->
+              <div class="row">
+                <div class="col-12">
+                  <h4>
+                    <i class="fas fa-globe"></i> انبار شیروان سبحانپور
+                    <div class="float-right"><small><strong>شماره فاکتور :</strong> {{ invoice.id }}</small></div>
+                  </h4>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- info row -->
+              <div class="row invoice-info m-3">
+                <div class="col-sm-4 invoice-col">
+                    <strong>تاریخ فاکتور: </strong>{{ invoice.created_at|date:"Y/m/d" }}
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    <strong>مشتری جناب آقای / خانوم: </strong>{{ invoice.customer }}
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+              <!-- Table row -->
+              <div class="row">
+                <div class="col-12 table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>شماره ردیف</th>
+                      <th>محصول</th>
+                      <th>تعداد</th>
+                      <th>قیمت هر شل</th>
+                      <th>مجموع</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in invoice_items %}
+                    	<td> {{ forloop.counter }} </td>
+                        <td>{{ item.product }}</td>
+                        <td>{{ item.count }}</td>
+                        <td>{{ item.price|thousand_separators }}</td>
+                        <td>{{ item.total_price|thousand_separators }}</td>
+                    {% endfor %}
+
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+
+              <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-6">
+                    {% if invoice.customer.customer_total_balance > 0 %}
+                        <strong>مطالبه شما از انبار :</strong> {{ invoice.customer.customer_total_balance|abs_number|thousand_separators }}
+                    {% endif %}
+                    <strong>بدهی شما نزد انبار :</strong> {{ invoice.customer.customer_total_balance|abs_number|thousand_separators }} <br>
+                    <strong>آدرس انبار: </strong> فارس ، فیروزآباد، فاز ۲، خیابان گلستان، کوچه ۸
+                    <br>
+                    <strong>تلفن تماس : </strong>09177206885
+                </div>
+                <!-- /.col -->
+                <div class="col-6">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <th style="width:50%">مجموع:</th>
+                        <td>{{ invoice.calculate_invoice_total_price|thousand_separators }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+              <hr>
+              <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-6">
+                    <strong>توضیحات: </strong>
+                </div>
+              </div>
+              <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-4">
+
+                </div>
+                <div class="col-4">
+                    <strong>مهر و امضای خریدار </strong>
+                </div>
+                <div class="col-4">
+                    <strong>مهر و امضای انباردار </strong>
+                </div>
+              </div>
+                <br>
+                <br>
+                <hr>
+            <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-12" style="text-align: center">
+                    <strong>
+                        *اجناس فوق در تاریخ           بصورت صحیح و سالم تحویل اینجانب گردید و تا تسویه حساب کامل به صورت امانت نزد خریدار باقی می باشد.
+                    </strong>
+                </div>
+              </div>
+              <!-- /.row -->
+              <!-- this row will not appear when printing -->
+              <div class="row no-print">
+                <div class="col-12">
+                  <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                  <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> پرداخت فاکتور
+                  </button>
+                  <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                    <i class="fas fa-download"></i> دریافت PDF
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- /.invoice -->
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+{% endblock %}

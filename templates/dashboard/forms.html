@@ -2,12 +2,14 @@
 {% load django_tables2 %}
 {% load render_table from django_tables2 %}
 {% block page_content %}
-    <div class="m-4">
-        <form method="post" id="mainForm">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">{{ is_update|yesno:"ویرایش,ساخت" }}</button>
-        </form>
+    <div class="card">
+            <div class="m-4">
+                <form method="post" id="mainForm">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">{{ is_update|yesno:"ویرایش,ساخت" }}</button>
+                </form>
+        </div>
     </div>
     <script>
         function addThousandSeparator(num) {

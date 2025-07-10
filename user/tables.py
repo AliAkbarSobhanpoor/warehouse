@@ -5,7 +5,7 @@ from base.functions import thousand_separators
 from base.tables import BaseTable
 from user.models import Customer
 from user.variables import CUSTOMER_TABLE_FIELDS
-from warehouse.functions import get_customer_total_price
+from warehouse.functions import get_customer_total_balance
 import django_tables2 as tables
 
 class UserTable(BaseTable):
@@ -23,7 +23,7 @@ class CustomerTable(BaseTable):
         fields = ("row_number", *CUSTOMER_TABLE_FIELDS, 'created_at_by', 'updated_at_by', 'operations', )
 
     def render_total_credit(self, record, **kwargs):
-        total_price = get_customer_total_price(record.id)
+        total_price = get_customer_total_balance(record.id)
         if total_price > 0:
             return mark_safe(
                 # language=html

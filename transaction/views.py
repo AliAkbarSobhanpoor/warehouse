@@ -1,10 +1,10 @@
-from django.shortcuts import render, reverse
-from django.views.generic import ListView
+from django.shortcuts import render, reverse, get_object_or_404
+from django.views.generic import ListView, View
 from django_tables2 import SingleTableView
 
 from base.variables import PAGINATED_BY_VALUE
 from base.views import StoreKeeperViLoginRequiredMixin
-from transaction.models import Invoice, Credit
+from transaction.models import Invoice, Credit, InvoiceItem
 from transaction.tables import InVoiceTable, CreditTables
 from transaction.variables import INVOICE_TYPE_CHOICE
 
@@ -63,3 +63,17 @@ class CreditListView(StoreKeeperViLoginRequiredMixin ,SingleTableView, ListView)
         }
         context["title"] = "لیست اعتبارات"
         return context
+
+
+class InvoiceDetailView(StoreKeeperViLoginRequiredMixin, View):
+    def get(self, request, invoice_id):
+        invoice = get_object_or_404(Invoice, id=invoice_id)
+        invoice_items = InvoiceItem.objects.filter(invoice=invoice)
+
+        context = {
+            "request": request,
+            "invoice": invoice,
+            "invoice_items": invoice_items,
+        }
+        return render(request, "dashboard/invoice.html", context)
+

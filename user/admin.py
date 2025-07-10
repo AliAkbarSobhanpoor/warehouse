@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth import get_user_model
 from base.admin import BaseModelAdmin
-from warehouse.functions import get_customer_total_price
+from warehouse.functions import get_customer_total_balance
 from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomerAdminForm
 from user.models import Customer
 from .variables import CUSTOMER_TABLE_FIELDS
@@ -37,5 +37,5 @@ class CustomerAdmin(BaseModelAdmin):
     form = CustomerAdminForm
     list_display = [*CUSTOMER_TABLE_FIELDS]
     def total_credit(self, obj):
-        return get_customer_total_price(obj.id)
+        return get_customer_total_balance(obj.id)
     total_credit.short_description = "اعتبار کل"
