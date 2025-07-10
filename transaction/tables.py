@@ -17,7 +17,7 @@ class InVoiceTable(BaseTable):
 
     def render_get_total_invoice_price(self, **kwargs):
         record = kwargs.get("record")
-        return sum(item.total_price for item in record.invoice_item.all())
+        return thousand_separators(sum(item.total_price for item in record.invoice_item.all()))
 
 
 class CreditTables(BaseTable):
